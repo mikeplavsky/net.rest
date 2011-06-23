@@ -6,6 +6,7 @@ using System.Threading;
 
 public class Site {
 	public string Name {get;set;}
+	public int Id {get;set;}
 }
 
 [ServiceContract]
@@ -16,11 +17,17 @@ public class SOM {
 	List<Site > GetSites() {
 	
 		return new List<Site > { 
-				new Site { Name = "First" },
-				new Site { Name = "Second" },
-				new Site { Name = "Third" }
+				new Site { Name = "First", Id = 3 },
+				new Site { Name = "Second", Id = 4 },
+				new Site { Name = "Third", Id = 2 }
 			};
 			
+	}
+	
+	[WebGet(UriTemplate = "site/{name}?id={id}", ResponseFormat=WebMessageFormat.Json)]
+	[OperationContract]
+	Site GetSite(string name, int id) {
+		return new Site { Name = name, Id = id };
 	}
 	
 }
